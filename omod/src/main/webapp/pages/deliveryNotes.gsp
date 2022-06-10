@@ -82,6 +82,16 @@
 		
         NavigatorController = new KeyboardController();
     });
+	 $('.tabheader').click(function(e){
+    e.preventDefault()
+    var tabId = $(e.currentTarget).data('tabId');
+    $('.' + tabId).hide();
+    $('#' + tabId).show();
+    $('.tabheader').removeClass('active');
+    $(e.currentTarget).addClass('active');
+    
+});
+$('.show').click();
 </script>
 
 <style>
@@ -340,6 +350,34 @@
 	.col1, .col2, .col3, .col4, .col5, .col6, .col7, .col8, .col9, .col10, .col11, .col12 {
 		float: left;
 	}
+	.tabheader {
+    float: left;
+    margin-right: 10px;
+}
+.tabheader.active {
+    font-weight: bold;
+}
+.tabs :before {
+    clear: both;
+    content:" ";
+    display: table;
+}
+.title: hover{
+	background color: #666;
+}
+.title{
+	background color: #666;
+	padding: .5em 1em;
+	padding-top: 0.5em;
+	text-decoration: none;
+	border-top: 2px solid #363463;
+	height: 22px;
+	margin: -1px;
+	color: #363463;
+	padding-top: 13px;
+	font-weight: bold;
+	font-family: 'Lucida Grande', 'Lucida Sans', Arial, Sans-serif;
+}
 </style>
 
 
@@ -405,8 +443,12 @@
 </div>
 
 <form method="post" class="simple-form-ui" id="delivery-form">
-    <section>
-        <span class="title">Delivery Details</span>
+<div>
+	<span class="title" class="tabheader show" data-tab-id="delivery-details">Delivery Details</span>
+	<span class="title" class="tabheader" data-tab-id="clinical-notes">Clinical Notes</span>
+</div>
+    <section class="tabs" id="delivery-details">
+    
         <input type="hidden" name="patientId" value="${patientId}" >
         <input type="hidden" name="queueId" value="${queueId}" >
         <fieldset class="no-confirmation mother-details">
@@ -559,8 +601,8 @@
         </fieldset>
     </section>
 	
-    <section>
-        <span class="title">Clinical Notes</span>
+    <section class="tabs" id="clinical-notes">
+        
         <fieldset class="no-confirmation">
             <legend>PMTCT Information</legend>
 			
