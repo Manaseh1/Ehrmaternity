@@ -1,5 +1,5 @@
  <%
-	ui.decorateWith("kenyaemr", "standardEmrPage", [title: "Maternity"])
+	ui.decorateWith("kenyaemr", "standardPage", [title: "Maternity"])
 	ui.includeJavascript("ehrcashier", "moment.js")
 	ui.includeCss("ehrconfigs", "referenceapplication.css")
 
@@ -531,11 +531,6 @@
 			
             <div>
                 <label>APGAR Score<span class="required">*</span></label>
-<<<<<<< HEAD
-			</div>
-               <div>
-=======
->>>>>>> f01e7452efd92ac86235f4d7522f971598f10504
 
 				<div>
 				<label for="apgar-score1">At 1 Minute<span class="required">*</span></label>
@@ -652,10 +647,6 @@
         </fieldset>
         <fieldset class="no-confirmation">
             <legend>Treatment</legend>
-<<<<<<< HEAD
-            <field >
-=======
->>>>>>> f01e7452efd92ac86235f4d7522f971598f10504
             <field class="flex">
                 <label>Counselled on feeding options?</label>
                 <label style="padding-left:0px; width: auto;">
@@ -678,10 +669,6 @@
                     No
                 </label>
             </field>
-<<<<<<< HEAD
-			<field>
-=======
->>>>>>> f01e7452efd92ac86235f4d7522f971598f10504
 			<field class="flex">
 				<label>Vitamin k supplementation?</label>
 				<label style="padding-right:0px; width: auto;">
@@ -728,11 +715,7 @@
             </span>
 	
         </div>
-<<<<<<< HEAD
-				
-=======
 		
->>>>>>> f01e7452efd92ac86235f4d7522f971598f10504
 		<!--Next and previous button-->
 			<div id="nav-buttons">
 				<button id="prev-button" type="button" class="confirm" style="display:none"> 
@@ -740,9 +723,5 @@
 				<button id="next-button" class="confirm right" type="button"> 
 				<icon class="fas fa-chevron-right"></icon>Next</button>
 			</div>
-<<<<<<< HEAD
-
-=======
->>>>>>> f01e7452efd92ac86235f4d7522f971598f10504
     </div>
 </form>
