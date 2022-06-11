@@ -1,5 +1,5 @@
-<%
-	ui.decorateWith("kenyaemr", "standardEmrPage", [title: "Maternity"])
+ <%
+	ui.decorateWith("kenyaemr", "standardPage", [title: "Maternity"])
 	ui.includeJavascript("ehrcashier", "moment.js")
 	ui.includeCss("ehrconfigs", "referenceapplication.css")
 
@@ -27,7 +27,11 @@
 			var labourDuration = jq('#labour-duration').val();
 			var deliveryMode = jq('#delivery-mode').val();
 			var bloodLoss = jq('#blood-loss').val();
-			
+		jQuery('.number numeric-range').keyup(function (){
+			if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+          this.value = this.value.replace(/[^0-9\.]/g, '');
+          }
+         });	
 			if (timeOfDelivery=="" || labourDuration=="" || deliveryMode=="" || bloodLoss==""){
 				jq('#mother-details-set').val('');
 			}
@@ -82,16 +86,6 @@
 		
         NavigatorController = new KeyboardController();
     });
-	 $('.tabheader').click(function(e){
-    e.preventDefault()
-    var tabId = $(e.currentTarget).data('tabId');
-    $('.' + tabId).hide();
-    $('#' + tabId).show();
-    $('.tabheader').removeClass('active');
-    $(e.currentTarget).addClass('active');
-    
-});
-$('.show').click();
 </script>
 
 <style>
@@ -416,12 +410,8 @@ $('.show').click();
 </div>
 
 <form method="post" class="simple-form-ui" id="delivery-form">
-<div>
-	<span class="title" class="tabheader show" data-tab-id="delivery-details">Delivery Details</span>
-	<span class="title" class="tabheader" data-tab-id="clinical-notes">Clinical Notes</span>
-</div>
-    <section class="tabs" id="delivery-details">
-    
+    <section>
+        <span class="title">Delivery Details</span>
         <input type="hidden" name="patientId" value="${patientId}" >
         <input type="hidden" name="queueId" value="${queueId}" >
         <fieldset class="no-confirmation mother-details">
@@ -454,8 +444,8 @@ $('.show').click();
 			
             <div>
 				<label for="blood-loss">Blood Loss<span class="required">*</span></label>
-				<input type="text" id="blood-loss" name="concept.161928AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" value="">
-				<span class="append-to-value">Mls</span>
+				<input type="text" id="blood-loss" name="concept.161928AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" min="0" max="20" value="">
+				<span class="append-to-value">L</span>
             </div>
 			
             <div>
@@ -590,8 +580,8 @@ $('.show').click();
         </fieldset>
     </section>
 	
-    <section class="tabs" id="clinical-notes">
-        
+    <section>
+        <span class="title">Clinical Notes</span>
         <fieldset class="no-confirmation">
             <legend>PMTCT Information</legend>
 			
