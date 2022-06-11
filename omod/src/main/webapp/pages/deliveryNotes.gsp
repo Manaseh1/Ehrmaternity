@@ -1,4 +1,4 @@
-<%
+ <%
 	ui.decorateWith("kenyaemr", "standardEmrPage", [title: "Maternity"])
 	ui.includeJavascript("ehrcashier", "moment.js")
 	ui.includeCss("ehrconfigs", "referenceapplication.css")
@@ -27,7 +27,11 @@
 			var labourDuration = jq('#labour-duration').val();
 			var deliveryMode = jq('#delivery-mode').val();
 			var bloodLoss = jq('#blood-loss').val();
-			
+		jQuery('.number numeric-range').keyup(function (){
+			if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+          this.value = this.value.replace(/[^0-9\.]/g, '');
+          }
+         });	
 			if (timeOfDelivery=="" || labourDuration=="" || deliveryMode=="" || bloodLoss==""){
 				jq('#mother-details-set').val('');
 			}
@@ -82,16 +86,6 @@
 		
         NavigatorController = new KeyboardController();
     });
-	 $('.tabheader').click(function(e){
-    e.preventDefault()
-    var tabId = $(e.currentTarget).data('tabId');
-    $('.' + tabId).hide();
-    $('#' + tabId).show();
-    $('.tabheader').removeClass('active');
-    $(e.currentTarget).addClass('active');
-    
-});
-$('.show').click();
 </script>
 
 <style>
@@ -350,34 +344,6 @@ $('.show').click();
 	.col1, .col2, .col3, .col4, .col5, .col6, .col7, .col8, .col9, .col10, .col11, .col12 {
 		float: left;
 	}
-	.tabheader {
-    float: left;
-    margin-right: 10px;
-}
-.tabheader.active {
-    font-weight: bold;
-}
-.tabs :before {
-    clear: both;
-    content:" ";
-    display: table;
-}
-.title: hover{
-	background color: #666;
-}
-.title{
-	background color: #666;
-	padding: .5em 1em;
-	padding-top: 0.5em;
-	text-decoration: none;
-	border-top: 2px solid #363463;
-	height: 22px;
-	margin: -1px;
-	color: #363463;
-	padding-top: 13px;
-	font-weight: bold;
-	font-family: 'Lucida Grande', 'Lucida Sans', Arial, Sans-serif;
-}
 </style>
 
 
@@ -443,12 +409,8 @@ $('.show').click();
 </div>
 
 <form method="post" class="simple-form-ui" id="delivery-form">
-<div>
-	<span class="title" class="tabheader show" data-tab-id="delivery-details">Delivery Details</span>
-	<span class="title" class="tabheader" data-tab-id="clinical-notes">Clinical Notes</span>
-</div>
-    <section class="tabs" id="delivery-details">
-    
+    <section>
+        <span class="title">Delivery Details</span>
         <input type="hidden" name="patientId" value="${patientId}" >
         <input type="hidden" name="queueId" value="${queueId}" >
         <fieldset class="no-confirmation mother-details">
@@ -481,8 +443,8 @@ $('.show').click();
 			
             <div>
 				<label for="blood-loss">Blood Loss<span class="required">*</span></label>
-				<input type="text" id="blood-loss" name="concept.161928AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" value="">
-				<span class="append-to-value">Mls</span>
+				<input type="text" id="blood-loss" name="concept.161928AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" min="0" max="20" value="">
+				<span class="append-to-value">L</span>
             </div>
 			
             <div>
@@ -567,11 +529,21 @@ $('.show').click();
             </div>
 			
             <div>
-                <label for="apgar-score">APGAR Score<span class="required">*</span></label>
-                <input type="text" id="apgar-score" name="concept.1504AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" value="" placeholder="APGAR Score">
+                <label>APGAR Score<span class="required">*</span></label>
+			</div>
+               <div>
+				<label for="apgar-score1">At 1 Minute<span class="required">*</span></label>
+				<input type="text" id="apgar-score1" name="concept.1504AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" value="" placeholder="APGAR Score at 1">
+			   </div>
+			    <div>
+				<label for="apgar-score5">At 5 Minutes<span class="required">*</span></label>
+				<input type="text" id="apgar-score5" name="concept.1504AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" value="" placeholder="APGAR Score at 5">
+                </div>
+			    <div>
+				<label for="apgar-score10">At 10 Minutes<span class="required">*</span></label>
+				<input type="text" id="apgar-score10" name="concept.1504AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" value="" placeholder="APGAR Score at 10">
             </div>
-			
-            <div>
+			<div>
                 <label>Tetracycline at birth</label>
                 <label style="padding-left:0px; width: auto; cursor: pointer">
                     <input type="radio" name="concept.112d5f03-8f9d-450b-bfc2-00ac13d96dd8" value="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
@@ -601,8 +573,8 @@ $('.show').click();
         </fieldset>
     </section>
 	
-    <section class="tabs" id="clinical-notes">
-        
+    <section>
+        <span class="title">Clinical Notes</span>
         <fieldset class="no-confirmation">
             <legend>PMTCT Information</legend>
 			
@@ -664,17 +636,11 @@ $('.show').click();
 				</div>				
 			</div>			
 			<div class="clear"></div>
-			
-			
-			
-			
-			
-            
            
         </fieldset>
         <fieldset class="no-confirmation">
             <legend>Treatment</legend>
-            <field>
+            <field >
                 <label>Counselled on feeding options?</label>
                 <label style="padding-left:0px; width: auto;">
                     <input type="radio" name="concept.5526AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" value="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
@@ -696,6 +662,17 @@ $('.show').click();
                     No
                 </label>
             </field>
+			<field>
+				<label>Vitamin k supplementation?</label>
+				<label style="padding-right:0px; width: auto;">
+					<input type="radio" name="concept.161534AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" value="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+					Yes
+				</label>
+				<label style="padding-right:0px; width: auto;">
+					<input type="radio" name="concept.161534AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" value="1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+					No
+				</label>
+			</field>
         </fieldset>
         <fieldset>
             <legend>Outcome</legend>
@@ -730,5 +707,14 @@ $('.show').click();
                 Cancel
             </span>
         </div>
+				
+		<!--Next and previous button-->
+			<div id="nav-buttons">
+				<button id="prev-button" type="button" class="confirm" style="display:none"> 
+				<icon class="fas fa-chevron-left"></icon>Previous</button>
+				<button id="next-button" class="confirm right" type="button"> 
+				<icon class="fas fa-chevron-right"></icon>Next</button>
+			</div>
+
     </div>
 </form>
