@@ -54,7 +54,7 @@
 			var apgarScore = jq('#apgar-score').val();
 			var bfInitiation = jq('input[name="concept.161543AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"]:checked').length;
 			var birthNotification = jq('#birth-notification-number').val();
-			
+			var BabyWeight = jq('#Weight-of-the-baby').val();
 			if (birthOutcome=="" || apgarScore=="" || birthNotification=="" || bfInitiation=="0"){
 				jq('#baby-details-set').val('');
 			}
@@ -82,6 +82,16 @@
 		
         NavigatorController = new KeyboardController();
     });
+	 $('.tabheader').click(function(e){
+    e.preventDefault()
+    var tabId = $(e.currentTarget).data('tabId');
+    $('.' + tabId).hide();
+    $('#' + tabId).show();
+    $('.tabheader').removeClass('active');
+    $(e.currentTarget).addClass('active');
+    
+});
+$('.show').click();
 </script>
 
 <style>
@@ -340,6 +350,7 @@
 	.col1, .col2, .col3, .col4, .col5, .col6, .col7, .col8, .col9, .col10, .col11, .col12 {
 		float: left;
 	}
+
 </style>
 
 
@@ -405,8 +416,12 @@
 </div>
 
 <form method="post" class="simple-form-ui" id="delivery-form">
-    <section>
-        <span class="title">Delivery Details</span>
+<div>
+	<span class="title" class="tabheader show" data-tab-id="delivery-details">Delivery Details</span>
+	<span class="title" class="tabheader" data-tab-id="clinical-notes">Clinical Notes</span>
+</div>
+    <section class="tabs" id="delivery-details">
+    
         <input type="hidden" name="patientId" value="${patientId}" >
         <input type="hidden" name="queueId" value="${queueId}" >
         <fieldset class="no-confirmation mother-details">
@@ -525,11 +540,27 @@
             </div>
 			
             <div>
-                <label for="apgar-score">APGAR Score<span class="required">*</span></label>
-                <input type="text" id="apgar-score" name="concept.1504AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" value="" placeholder="APGAR Score">
+                <label>APGAR Score<span class="required">*</span></label>
+
+				<div>
+				<label for="apgar-score1">At 1 Minute<span class="required">*</span></label>
+				<input type="text" id="apgar-score1" name="concept.1504AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" value="" placeholder="APGAR Score at 1">
+			   </div>
+			    <div>
+				<label for="apgar-score5">At 5 Minutes<span class="required">*</span></label>
+				<input type="text" id="apgar-score5" name="concept.1504AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" value="" placeholder="APGAR Score at 5">
+                </div>
+			    <div>
+				<label for="apgar-score10">At 10 Minutes<span class="required">*</span></label>
+				<input type="text" id="apgar-score10" name="concept.1504AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" value="" placeholder="APGAR Score at 10">
             </div>
-			
-            <div>
+			<div>
+				<label for="Baby-weight">Baby weight<span class="required">*</span></label>
+				<input type="text" id="Baby-Weight" name="concept.1504AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" class="number numeric-range" value="" placeholder="APGAR Score at 1">
+			</div>
+			</div>
+              
+			<div>
                 <label>Tetracycline at birth</label>
                 <label style="padding-left:0px; width: auto; cursor: pointer">
                     <input type="radio" name="concept.112d5f03-8f9d-450b-bfc2-00ac13d96dd8" value="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
@@ -559,8 +590,8 @@
         </fieldset>
     </section>
 	
-    <section>
-        <span class="title">Clinical Notes</span>
+    <section class="tabs" id="clinical-notes">
+        
         <fieldset class="no-confirmation">
             <legend>PMTCT Information</legend>
 			
@@ -622,17 +653,11 @@
 				</div>				
 			</div>			
 			<div class="clear"></div>
-			
-			
-			
-			
-			
-            
            
         </fieldset>
         <fieldset class="no-confirmation">
             <legend>Treatment</legend>
-            <field>
+            <field class="flex">
                 <label>Counselled on feeding options?</label>
                 <label style="padding-left:0px; width: auto;">
                     <input type="radio" name="concept.5526AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" value="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
@@ -643,7 +668,7 @@
                     No
                 </label>
             </field>
-            <field>
+            <field class="flex">
                 <label>Vitamin A supplementation?</label>
                 <label style="padding-left:0px; width: auto;">
                     <input type="radio" name="concept.161534AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" value="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
@@ -654,6 +679,17 @@
                     No
                 </label>
             </field>
+			<field class="flex">
+				<label>Vitamin k supplementation?</label>
+				<label style="padding-right:0px; width: auto;">
+					<input type="radio" name="concept.161534AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" value="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+					Yes
+				</label>
+				<label style="padding-right:0px; width: auto;">
+					<input type="radio" name="concept.161534AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" value="1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+					No
+				</label>
+			</field>
         </fieldset>
         <fieldset>
             <legend>Outcome</legend>
@@ -687,6 +723,15 @@
                 <i class="icon-remove small"></i>
                 Cancel
             </span>
+	
         </div>
+		
+		<!--Next and previous button-->
+			<div id="nav-buttons">
+				<button id="prev-button" type="button" class="confirm" style="display:none"> 
+				<icon class="fas fa-chevron-left"></icon>Previous</button>
+				<button id="next-button" class="confirm right" type="button"> 
+				<icon class="fas fa-chevron-right"></icon>Next</button>
+			</div>
     </div>
 </form>
